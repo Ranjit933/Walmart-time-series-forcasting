@@ -305,3 +305,52 @@ Despite SARIMA’s ability to model seasonality and ARIMA’s differencing capab
 **In this part of the demonstration, we will perform testes on the time series data to understand weather it is stationary or not. The autoregression modling required the time series data to be statinory. To test this,we will use the following test:**
 
 * **Augmented Dickey-Fuller(ADF) Test**
+![store2](https://github.com/Ranjit933/Walmart-time-series-forcasting/blob/main/Walmart%20png/store_2_ar.png)
+* The data was divided into training (all weeks except the last 12) and testing (last 12 weeks) sets.
+
+* This split allows us to validate the forecasting models by comparing predictions with the actual test data.
+### Box-Cox Transformation
+The Box-Cox Transformation is used to stabilize the variance of a time series. It involves the application of a power transformation to the time series data. Let's import the boxcox method from scipy to implemented this transformation.
+![Store2boxcox](https://github.com/Ranjit933/Walmart-time-series-forcasting/blob/main/Walmart%20png/Store_2_boxcox.png)
+**Left plot (Blue) → Original Weekly Sales data of Store 2**
+
+* Large spikes are visible around November 2010, December 2010, and December 2011.
+
+* The variance is quite high, with sales values fluctuating between very high and relatively low levels.
+
+**Right plot (Green) → Box-Cox transformed data (λ = 0, i.e., log transform)**
+
+* The variance has been stabilized across the entire time period.
+
+* The spikes around late 2010 and late 2011 are no longer as extreme.
+
+* The transformed series is smoother and more suitable for time series modeling.
+
+**After transformation, the series became more suitable for time series modeling with AR, ARIMA, and SARIMA.**
+### Final Conclusion (Stores 1–5)
+
+In this project, predictive modeling techniques (AR, ARIMA, SARIMA) were applied to forecast weekly sales for five Walmart stores over a 12-week horizon. The goal was to evaluate whether advanced models like ARIMA and SARIMA provide significant improvements over the simpler Autoregressive (AR) model.
+
+**Store 1 :-** All three models gave nearly identical RMSE values (~1,551,664). The sales pattern appears stable but with higher variance, and seasonality did not add predictive power.
+
+**Store 2 :-** The AR model performed exceptionally well (RMSE 82,223), while ARIMA and SARIMA performed much worse (~1,879,248). This indicates that AR is the best choice here, and the added complexity of ARIMA/SARIMA harms performance.
+
+**Store 3 :-** All models achieved the same RMSE (~23,637). This shows a stable sales trend with no strong seasonality.
+
+**Store 4 :-** Again, AR, ARIMA, and SARIMA performed identically (RMSE ~160,315), suggesting limited seasonal influence and stable demand.
+
+**Store 5 :-** All models gave the same RMSE (~20,497). The store’s sales are predictable and consistent, meaning a simple AR model is sufficient.
+
+Overall, for all five stores, AR performed as well as or better than ARIMA and SARIMA, proving that increasing model complexity did not improve accuracy.
+
+### Final Recommendation
+
+**1.Use AR as the baseline forecasting model across all stores (1–5).** It is computationally efficient, easy to maintain, and gives comparable accuracy to ARIMA/SARIMA.
+
+**2.Monitor Store 2 closely –** since AR clearly outperforms ARIMA/SARIMA here, it highlights that advanced models may even worsen predictions if not well-suited.
+
+**3.Holiday/Event Adjustments –** although baseline forecasts are stable, special event periods (e.g., Thanksgiving, Black Friday, Christmas) should be handled separately, as models struggled with sudden spikes.
+
+**4.Keep ARIMA/SARIMA as backup –** even though they didn’t show improvements here, they may become useful if future data reveals seasonal shifts or structural changes in sales.
+
+**5.Scaling to all stores –** since results are consistent, the same AR-based forecasting framework can be confidently applied across other Walmart stores beyond these five.
